@@ -65,8 +65,8 @@ public class AdminConfig extends WebSecurityConfigurerAdapter {
                 .and().exceptionHandling()
                 .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-                .antMatchers(RestEndpoints.USER_PREFIX+"/"+RestEndpoints.LOGIN).permitAll()
-                .antMatchers(RestEndpoints.USER_PREFIX+"/"+RestEndpoints.LAUNCH_POSTFIX)
+                .antMatchers("/"+RestEndpoints.USER_PREFIX+RestEndpoints.LOGIN).permitAll()
+                .antMatchers("/"+RestEndpoints.USER_PREFIX+RestEndpoints.LAUNCH_POSTFIX)
                 .authenticated().and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
