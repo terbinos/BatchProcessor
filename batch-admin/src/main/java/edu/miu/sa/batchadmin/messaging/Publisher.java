@@ -19,7 +19,7 @@ public class Publisher {
     @Value("${spring.rabbitmq.host}")
     private String HOST;
 
-    public void publish(String message) throws Exception {
+    public void publish(String message) {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(HOST);
         try (Connection connection = factory.newConnection();
@@ -27,6 +27,9 @@ public class Publisher {
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             channel.basicPublish("", QUEUE_NAME, null, message.getBytes(StandardCharsets.UTF_8));
             log.info("Publisher Sent '" + message + "'");
+        }
+        catch(Exception e) {
+            log.error(e.getMessage());
         }
     }
 }
