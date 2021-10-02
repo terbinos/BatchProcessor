@@ -1,16 +1,19 @@
 package edu.miu.sa.batchadmin;
 
+import edu.miu.sa.batchadmin.messaging.Publisher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
 
 @RestController
 public class AdminController {
+    @Autowired
+    Publisher publisher;
 
     @RequestMapping("/admin/launch")
-    public String launchJob() {
-        String url = "http://localhost:8081/launch";
-        return new RestTemplate().getForObject(url, String.class);
+    public String launchJob() throws Exception {
+        publisher.publish("START");
+        return "Job start message sent!";
     }
 }

@@ -49,6 +49,12 @@
 			<artifactId>spring-batch-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.rabbitmq</groupId>
+			<artifactId>amqp-client</artifactId>
+			<version>5.13.1</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
