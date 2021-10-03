@@ -54,7 +54,7 @@ services:
       - batchDb
       - rabbitMQ
     environment:
-      DB_URL: jdbc:mysql://batchDb:3306/batch_demo_db
+      DB_URL: jdbc:mysql://batchDb:3308/batch_demo_db
       SERVER_PORT: 8001
       DB_USERNAME: root
       DB_PASSWORD: root
