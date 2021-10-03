@@ -1,10 +1,13 @@
 server:
-  port: 8081
+  port: ${SERVER_PORT}
 spring:
+  config:
+    import: development.yml
+
   datasource:
-    url: jdbc:mysql://localhost:3306/batch_demo_db
-    username: root
-    password: P@ssw0rd2314
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
@@ -15,9 +18,10 @@ spring:
 
     jdbc:
       initialize-schema: always
+
   rabbitmq:
-    host: localhost
-    queue: batch_job
+    host: ${RABBIT_HOST}
+    queue: ${RABBIT_QUEUE}
 
 app:
   csv:

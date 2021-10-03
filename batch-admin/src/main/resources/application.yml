@@ -1,12 +1,12 @@
 server:
-  port: 9004
+  port: ${SERVER_PORT}
 spring:
   config:
     import: development.yml
   datasource:
-    url: jdbc:mysql://localhost:3306/BatchProcessor
-    username: root
-    password:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       maximum-pool-size: 10
@@ -16,9 +16,9 @@ spring:
     show-sql: true
 
   rabbitmq:
-    host: localhost
-    queue: batch_job
+    host: ${RABBIT_HOST}
+    queue: ${RABBIT_QUEUE}
 
 jwt:
-  expiry:
-  secret:
+  expiry: ${JWT_EXPIRE}
+  secret: ${JWT_SECRET}
