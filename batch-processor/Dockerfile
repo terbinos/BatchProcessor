@@ -1,8 +1,6 @@
-FROM adoptopenjdk/openjdk11:jre-11.0.11_9-alpine
-ARG appName=batch_process_app
-ARG JAR_FILE=target/*.jar
-CMD mkdir ${appName}
-WORKDIR ${appName}
-COPY ${JAR_FILE} app.jar
-
-ENTRYPOINT ["java", "-jar", "app.jar"]
+FROM maven:3.8.2-jdk-11-slim
+WORKDIR /usr/src/app
+COPY ./target/*.jar /usr/src/app
+RUN chmod +x ./wait_for_it.sh
+RUN mvn package -Dmaven.test.skip
+CMD [ "sh", "-c", "mvn spring-boot:run" ]
