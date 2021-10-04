@@ -22,6 +22,7 @@ spring:
   rabbitmq:
     host: ${RABBIT_HOST}
     queue: ${RABBIT_QUEUE}
+    job_completed: ${RABBIT_JOB_COMPLETED}
 
 jwt:
   expiry: ${JWT_EXPIRE}

@@ -16,16 +16,6 @@ public class AdminController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    Publisher publisher;
-
-    @GetMapping(RestEndpoints.LAUNCH_POSTFIX)
-    public String launchJob() {
-        System.out.println("hey there");
-        publisher.publish("START");
-        return "Job start message sent!";
-    }
-
     @PostMapping(RestEndpoints.LOGIN)
     public ResponseEntity<Object> authenticate(@RequestBody LoginDTO loginBody) {
         return userService.authenticate(loginBody);
