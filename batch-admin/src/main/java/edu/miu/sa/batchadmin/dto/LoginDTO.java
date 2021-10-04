@@ -1,10 +1,9 @@
 package edu.miu.sa.batchadmin.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
+@Setter@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginDTO {

@@ -21,15 +21,15 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ResponseEntity<Object> authenticate(LoginDTO request) {
-        JSONObject errorObject = new JSONObject();
+        JSONObject responseObject = new JSONObject();
         if(!validateInputs(request.getUsername())){
-            errorObject.put("email","Email is required");
+            responseObject.put("username","Username is required");
         }
         if(!validateInputs(request.getPassword())){
-            errorObject.put("password","Password is required");
+            responseObject.put("password","Password is required");
         }
-        if(!errorObject.isEmpty()){
-            return ResponseEntity.badRequest().body(errorObject);
+        if(!responseObject.isEmpty()){
+            return ResponseEntity.badRequest().body(responseObject);
         }else{
             try {
                 authenticationManager.authenticate(
@@ -37,13 +37,13 @@ public class UserServiceImpl implements UserService{
                 );
             } catch (Exception ex) {
                 System.out.println("Exception : "+ex);
-                errorObject.put("credentials","Invalid credentials");
-                return ResponseEntity.badRequest().body(errorObject);
+                responseObject.put("credentials","Invalid credentials");
+                return ResponseEntity.badRequest().body(responseObject);
             }
             String token = jwtUtil.generateToken(request.getUsername());
-            errorObject.put("success",true);
-            errorObject.put("token","Bearer " +token);
-            return ResponseEntity.status(HttpStatus.OK).body(errorObject);
+            responseObject.put("success",true);
+            responseObject.put("token","Bearer " +token);
+            return ResponseEntity.status(HttpStatus.OK).body(responseObject);
         }
     }
 
