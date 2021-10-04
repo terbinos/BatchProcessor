@@ -1,0 +1,78 @@
+version: '3.9'
+services:
+  admindb:
+    container_name: admindb
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=BatchProcessor
+      - MYSQL_MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=root
+    command: [ '--default-authentication-plugin=mysql_native_password' ]
+    volumes:
+      - admin-db:/var/lib/mysql
+    ports:
+      - "3307:3306"
+
+  admin:
+    container_name: admin
+    restart: on-failure
+    image: pyordan/batch_admin:1.0
+    command: sh -c './wait_for_it.sh admindb:3306 -- mvn spring-boot:run'
+    depends_on:
+      - admindb
+      - rabbitMQ
+    environment:
+      - DB_URL=jdbc:mysql://admindb:3306/BatchProcessor
+      - SERVER_PORT=9001
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - RABBIT_HOST=rabbitMQ
+      - RABBIT_QUEUE=batch_job
+      - JWT_EXPIRE=6000000
+      - JWT_SECRET=FKckg7aj1rt9scui5ik5tr93d0
+    ports:
+      - "9001:9001"
+
+  batchdb:
+    container_name: batchdb
+    image: mysql:latest
+    command: [ '--default-authentication-plugin=mysql_native_password' ]
+    environment:
+    - MYSQL_DATABASE=batch_demo_db
+    - MYSQL_MYSQL_ROOT_USER=root
+    - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3308:3306"
+    volumes:
+      - batch-db:/var/lib/mysql
+
+  rabbitMQ:
+    container_name: rabbitMQ
+    image: rabbitmq:3-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+
+  batch_processor:
+    container_name: batch-processor
+    image: pyordan/batch_processor:1.0
+    depends_on:
+      - batchdb
+      - rabbitMQ
+    command: sh -c './wait_for_it.sh batchdb:3306 -- mvn spring-boot:run'
+    environment:
+      - DB_URL=jdbc:mysql://batchdb:3306/batch_demo_db
+      - SERVER_PORT=8001
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - RABBIT_HOST=rabbitMQ
+      - RABBIT_QUEUE=batch_job
+    ports:
+      - "8001:8001"
+
+volumes:
+  admin-db:
+  batch-db:
+
+

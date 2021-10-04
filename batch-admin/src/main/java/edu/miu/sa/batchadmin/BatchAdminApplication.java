@@ -9,5 +9,4 @@ public class BatchAdminApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BatchAdminApplication.class, args);
 	}
-
 }
