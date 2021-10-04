@@ -21,8 +21,9 @@ public class JobService {
     Job job;
 
     public void launchJob() throws Exception{
+        log.info("Job Started!");
         JobParameters jobParameters = new JobParametersBuilder().addDate("date", new Date()).toJobParameters();
         jobLauncher.run(job, jobParameters);
-        log.info("Job started.");
+        log.info("Job Completed!");
     }
 }

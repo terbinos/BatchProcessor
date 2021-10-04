@@ -16,8 +16,8 @@ services:
   admin:
     container_name: admin
     restart: on-failure
-    image: pyordan/batch_admin:1.0
-    command: sh -c './wait_for_it.sh admindb:3306 -- mvn spring-boot:run'
+    image: pyordan/batch_admin:1.1
+    command: sh -c './wait_for_it.sh admindb:3306 rabbitMQ:5672 -- mvn spring-boot:run'
     depends_on:
       - admindb
       - rabbitMQ
@@ -56,11 +56,11 @@ services:
 
   batch_processor:
     container_name: batch-processor
-    image: pyordan/batch_processor:1.0
+    image: pyordan/batch_processor:1.1
     depends_on:
       - batchdb
       - rabbitMQ
-    command: sh -c './wait_for_it.sh batchdb:3306 -- mvn spring-boot:run'
+    command: sh -c './wait_for_it.sh batchdb:3306 rabbitMQ:5672 -- mvn spring-boot:run'
     environment:
       - DB_URL=jdbc:mysql://batchdb:3306/batch_demo_db
       - SERVER_PORT=8001

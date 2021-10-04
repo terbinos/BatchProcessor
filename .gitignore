@@ -28,3 +28,5 @@ hs_err_pid*
 *development.yml
 *.DS_STORE
 *target/
+*bin/
+*.mvn/
