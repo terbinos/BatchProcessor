@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "job/")
+@RequestMapping(RestEndpoints.JOB_PREFIX)
 public class JobController {
 
     private final JobService service;

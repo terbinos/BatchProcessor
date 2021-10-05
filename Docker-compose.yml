@@ -16,7 +16,7 @@ services:
   admin:
     container_name: admin
     restart: on-failure
-    image: pyordan/batch_admin:1.1
+    image: pyordan/batch_admin:1.2
     command: sh -c './wait_for_it.sh admindb:3306 rabbitMQ:5672 -- mvn spring-boot:run'
     depends_on:
       - admindb
@@ -57,7 +57,7 @@ services:
 
   batch_processor:
     container_name: batch-processor
-    image: pyordan/batch_processor:1.1
+    image: pyordan/batch_processor:1.2
     depends_on:
       - batchdb
       - rabbitMQ
