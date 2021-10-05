@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
+import com.google.gson.Gson;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -28,10 +28,12 @@ public class JobCompletionSubscriber {
 
     private final DeliverCallback deliverCallback = (consumerTag, delivery) -> {
         String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
+        Gson gson = new Gson();
+        Job completedJob = gson.fromJson(message, Job.class);
         log.info("Saving job info");
 
-        //todo: recieve object from the queue
-        jobService.save(new Job());
+        //todo: receive object from the queue
+        jobService.save(completedJob);
 
     };
 

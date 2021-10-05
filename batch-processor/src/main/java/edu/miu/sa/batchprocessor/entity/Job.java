@@ -1,11 +1,14 @@
 package edu.miu.sa.batchprocessor.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class Job {
+@AllArgsConstructor
+public class Job implements Serializable {
 
     private String name;
 

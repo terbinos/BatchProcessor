@@ -27,7 +27,8 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - RABBIT_HOST=rabbitMQ
-      - RABBIT_QUEUE=batch_job
+      - RABBIT_JOB_START=job_start_queue
+      - RABBIT_JOB_COMPLETED=job_completed_queue
       - JWT_EXPIRE=6000000
       - JWT_SECRET=FKckg7aj1rt9scui5ik5tr93d0
     ports:
@@ -67,7 +68,8 @@ services:
       - DB_USERNAME=root
       - DB_PASSWORD=root
       - RABBIT_HOST=rabbitMQ
-      - RABBIT_QUEUE=batch_job
+      - RABBIT_JOB_START=job_start_queue
+      - RABBIT_JOB_COMPLETED=job_completed_queue
     ports:
       - "8001:8001"
 
