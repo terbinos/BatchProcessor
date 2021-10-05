@@ -14,13 +14,13 @@ import java.nio.charset.StandardCharsets;
 
 @Slf4j
 @Component
-public class Subscriber {
+public class JobStartSubscriber {
 
     @Autowired
     JobService jobService;
 
-    @Value("${spring.rabbitmq.queue}")
-    private String QUEUE_NAME;
+    @Value("${spring.rabbitmq.job_start}")
+    private String QUEUE_JOB_START;
 
     @Value("${spring.rabbitmq.host}")
     private String HOST;
@@ -44,9 +44,9 @@ public class Subscriber {
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
 
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            channel.queueDeclare(QUEUE_JOB_START, false, false, false, null);
             log.info("[*] Waiting for messages.");
-            channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
+            channel.basicConsume(QUEUE_JOB_START, true, deliverCallback, consumerTag -> {
             });
 
         } catch (Exception e) {
