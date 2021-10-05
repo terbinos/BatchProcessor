@@ -13,8 +13,8 @@ import java.nio.charset.StandardCharsets;
 @Component
 public class Publisher {
 
-    @Value("${spring.rabbitmq.queue}")
-    private String QUEUE_NAME;
+    @Value("${spring.rabbitmq.job_start}")
+    private String QUEUE_JOB_START;
 
     @Value("${spring.rabbitmq.host}")
     private String HOST;
@@ -24,8 +24,8 @@ public class Publisher {
         factory.setHost(HOST);
         try (Connection connection = factory.newConnection();
             Channel channel = connection.createChannel()) {
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
-            channel.basicPublish("", QUEUE_NAME, null, message.getBytes(StandardCharsets.UTF_8));
+            channel.queueDeclare(QUEUE_JOB_START, false, false, false, null);
+            channel.basicPublish("", QUEUE_JOB_START, null, message.getBytes(StandardCharsets.UTF_8));
             log.info("Publisher Sent '" + message + "'");
         }
         catch(Exception e) {
