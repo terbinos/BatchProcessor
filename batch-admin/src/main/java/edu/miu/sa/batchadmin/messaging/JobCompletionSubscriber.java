@@ -1,5 +1,6 @@
 package edu.miu.sa.batchadmin.messaging;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.google.gson.Gson;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -28,8 +28,8 @@ public class JobCompletionSubscriber {
 
     private final DeliverCallback deliverCallback = (consumerTag, delivery) -> {
         String message = new String(delivery.getBody(), StandardCharsets.UTF_8);
-        Gson gson = new Gson();
-        Job completedJob = gson.fromJson(message, Job.class);
+        ObjectMapper objectMapper = new ObjectMapper();
+        Job completedJob = objectMapper.readValue(message, Job.class);
         log.info("Saving job info");
 
         //todo: receive object from the queue
